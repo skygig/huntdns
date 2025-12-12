@@ -1,0 +1,323 @@
+:root {
+  --bg-color: #0d1117;
+  --text-main: #c9d1d9;
+  --accent: #58a6ff;
+  --terminal-bg: #161b22;
+  --terminal-header: #21262d;
+  --code-green: #3fb950;
+  --code-orange: #d29922;
+  --code-purple: #a371f7;
+  --code-blue: #79c0ff;
+  --border-color: #30363d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  padding: 0 15px;
+}
+
+/* Typography */
+h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #ff7b54, #ffb26b);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+p.tagline {
+  font-size: 1.25rem;
+  color: #8b949e;
+  margin-bottom: 3.5rem;
+}
+
+/* Terminal Window Styling */
+.terminal-window {
+  background-color: var(--terminal-bg);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  text-align: left;
+  margin: 0 auto 3rem auto;
+  border: 1px solid var(--border-color);
+  font-family: "Menlo", "Monaco", "Courier New", monospace;
+  max-width: 780px; /* Slightly wider for DNS output */
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.terminal-window:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  border-color: #58a6ff;
+}
+
+.terminal-header {
+  background-color: var(--terminal-header);
+  padding: 12px 15px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  user-select: none; /* Prevent selecting header text */
+}
+
+.terminal-title {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.8rem;
+  color: #8b949e;
+  /* Center the title by compensating for the window controls width */
+  transform: translateX(-26px);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.red {
+  background-color: #ff5f56;
+}
+.yellow {
+  background-color: #ffbd2e;
+}
+.green {
+  background-color: #27c93f;
+}
+
+.terminal-body {
+  padding: 20px;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto; /* Horizontal scroll for long lines */
+}
+
+/* Custom Scrollbar for Terminal */
+.terminal-body::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.terminal-body::-webkit-scrollbar-track {
+  background: var(--terminal-bg);
+}
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+.command-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.prompt {
+  color: var(--code-green);
+  font-weight: bold;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+.path {
+  color: var(--code-blue);
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.command-text {
+  color: var(--text-main);
+}
+
+/* Cursor Animation */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background-color: #8b949e;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Preformatted text for authentic terminal output alignment */
+pre.output {
+  color: #8b949e;
+  white-space: pre; /* Keeps exact spacing */
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Syntax Highlighting classes */
+.hl-header {
+  color: var(--accent);
+  font-weight: bold;
+}
+.hl-number {
+  color: var(--code-orange);
+  font-weight: bold;
+}
+.hl-string {
+  color: var(--text-main);
+  font-weight: 600;
+}
+.hl-comment {
+  color: #484f58;
+}
+.hl-section {
+  color: var(--code-blue);
+  font-weight: bold;
+}
+
+/* Footer / CTA */
+.footer {
+  margin-top: 3rem;
+  font-size: 0.95rem;
+  color: #8b949e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.code-snippet {
+  background: #21262d;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-family: "Menlo", "Monaco", monospace;
+  color: var(--code-green);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.code-snippet:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #262c36;
+}
+
+.code-snippet::after {
+  content: "Click to copy";
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.code-snippet:hover::after {
+  opacity: 1;
+}
+
+.btn {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.25rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  .terminal-window {
+    margin: 0 0 2rem 0;
+  }
+  .terminal-body {
+    padding: 15px;
+    font-size: 0.8rem;
+  }
+  .terminal-title {
+    display: none;
+  }
+  .prompt {
+    margin-right: 5px;
+  }
+}
+
+/* Toast Notification */
+#toast {
+  visibility: hidden;
+  background-color: #6868683f;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  z-index: 100;
+  right: -100px;
+  bottom: -4px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s, bottom 0.3s;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 4px;
+}

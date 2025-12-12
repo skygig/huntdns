@@ -1,9 +1,16 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const publicPath = path.join(__filename, "../public");
 
 const app = express();
+app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
-  res.send("<h1>Hello World </h1>");
+  const htmlFilePath = path.join(publicPath, "index.html");
+  res.sendFile(htmlFilePath);
 });
 
 app.listen(3000, () => {

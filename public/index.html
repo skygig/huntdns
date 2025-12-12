@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HuntDNS - Product Hunt in your Terminal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>HuntDNS</h1>
+      <p class="tagline">Discover Product Hunt's Top Products Without Leaving Your Terminal</p>
+
+      <!-- Terminal Simulation -->
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+          <div class="terminal-title">zsh — 80x24</div>
+        </div>
+
+        <div class="terminal-body">
+          <div class="command-line">
+            <span class="prompt">user@dev</span><span class="path">:~ $</span>
+            <span class="command-text">dig @huntdns.com txt top +short</span>
+          </div>
+
+          <!-- Using <pre> ensures strict whitespace alignment for DNS output columns -->
+          <pre class="output">
+<span class="hl-comment">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @huntdns.com txt top
+; (1 server found)
+
+;; ANSWER SECTION:
+<span class="hl-header">"🚀 TODAY'S TOP 7 LAUNCHES"</span>
+<span class="hl-number">1.</span> <span class="hl-string">"SuperAGI"</span> - Open Source Autonomous AI Framework
+<span class="hl-number">2.</span> <span class="hl-string">"Dora AI"</span> - Text to Website 3D Animation
+<span class="hl-number">3.</span> <span class="hl-string">"Resend"</span> - Email for Developers
+<span class="hl-number">4.</span> <span class="hl-string">"Lazy"</span> - Capture ideas without interrupting your flow
+<span class="hl-number">5.</span> <span class="hl-string">"Loops"</span> - Modern email for SaaS
+<span class="hl-number">6.</span> <span class="hl-string">"Reflect"</span> - Note-taking with end-to-end encryption
+<span class="hl-number">7.</span> <span class="hl-string">"Cursor"</span> - The AI-first Code Editor
+
+<span class="hl-comment">;; Query time: 12 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; MSG SIZE  rcvd: 392</span>
+</pre>
+          <div class="command-line" style="margin-top: 10px">
+            <span class="prompt">user@dev</span><span class="path">:~ $</span
+            ><span class="cursor"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Paste this into your terminal to try it:</p>
+        <div class="code-snippet" onclick="copyCommand()">
+          <span>dig @huntdns.com txt top +short</span>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path
+              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+            ></path>
+          </svg>
+
+          <div id="toast">Copied!</div>
+        </div>
+
+        <a href="https://github.com/skygig/huntdns" target="_blank" class="btn">
+          <svg
+            height="28"
+            viewBox="0 0 16 16"
+            version="1.1"
+            width="28"
+            style="fill: rgba(255, 255, 255, 0.9);"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      function copyCommand() {
+        const command = "dig @huntdns.com txt top +short";
+
+        // Modern clipboard API with Fallback
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(command)
+            .then(() => {
+              showToast();
+            })
+            .catch((err) => {
+              console.error("Failed to copy: ", err);
+              fallbackCopy(command);
+            });
+        } else {
+          fallbackCopy(command);
+        }
+      }
+
+      function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // Avoid scrolling to bottom
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showToast();
+        } catch (err) {
+          console.error("Fallback copy failed", err);
+          alert("Failed to copy. Please copy manually.");
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showToast() {
+        const toast = document.getElementById("toast");
+        toast.className = "show";
+        setTimeout(function () {
+          toast.className = toast.className.replace("show", "");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
